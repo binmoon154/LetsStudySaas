@@ -1,14 +1,8 @@
 {
     "version": 2,
-    "rewrites": [
-        {
-            "source": "/api/(.*)",
-            "destination": "/backend/app.py"
-        }
-    ],
     "builds": [
         {
-            "src": "backend/app.py",
+            "src": "api/index.py",
             "use": "@vercel/python"
         },
         {
@@ -17,6 +11,12 @@
             "config": {
                 "distDir": "dist"
             }
+        }
+    ],
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "api/index.py"
         }
     ]
 }
