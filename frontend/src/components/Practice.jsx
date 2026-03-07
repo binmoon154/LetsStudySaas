@@ -18,11 +18,11 @@ const Practice = ({ type }) => {
         if (!input) return alert('이름을 입력해주세요!');
         setLoading(true);
         try {
-            // 환경 변수에서 백엔드 URL을 가져옵니다. (기본값: http://localhost:5000)
-            const backendBaseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+            // 동일 도메인 배포 환경이므로 상대 경로를 사용합니다.
+            const apiUrl = '/api/practice/summary';
 
             // 2. Flask 서버로 POST 요청 보내기
-            const response = await fetch(`${backendBaseUrl}/api/practice/summary`, {
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: input, action: '고급 API 실습' })
