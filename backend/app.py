@@ -66,5 +66,38 @@ def get_flask_workbook():
         ]
     })
 
+@app.route('/api/practice/summary', methods=['POST'])
+def post_practice_summary():
+    """
+    실습 데이터 요약 결과 생성 (POST 실습)
+    ---
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            action:
+              type: string
+    responses:
+      201:
+        description: 요약 결과 반환 성공
+    """
+    from flask import request
+    data = request.get_json()
+    name = data.get('name', '익명')
+    action = data.get('action', '알 수 없는 작업')
+    
+    summary = f"[{name}]님이 '{action}' 실습을 요청하셨습니다. 서버에서 안정적으로 데이터를 수신하여 201 Created 응답을 보냅니다."
+    
+    return jsonify({
+        "status": "success",
+        "message": summary,
+        "received_data": data
+    }), 201
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

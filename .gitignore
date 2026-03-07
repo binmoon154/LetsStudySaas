@@ -17,6 +17,7 @@ ENV/
 env/
 .env
 backend/.env
+frontend/.env
 
 # IDE / OS
 .vscode/
