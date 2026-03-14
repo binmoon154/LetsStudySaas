@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import Workbook from './components/Workbook'
 import Practice from './components/Practice'
+import RpsGame from './components/RpsGame'
+import GoalTracker from './components/GoalTracker'
+import IdCardGenerator from './components/IdCardGenerator'
+import FaceRecognition from './components/FaceRecognition'
 import './App.css'
 
 function App() {
@@ -41,7 +45,11 @@ function App() {
         {tab === 'practice' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <Practice type="react" />
+            <GoalTracker />
             <Practice type="flask" />
+            <IdCardGenerator />
+            <FaceRecognition />
+            <RpsGame />
           </div>
         )}
       </main>

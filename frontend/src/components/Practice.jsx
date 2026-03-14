@@ -5,6 +5,7 @@ const Practice = ({ type }) => {
     const [items, setItems] = useState(['기본 샘플 데이터']); // React 실습용 리스트 상태
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [showDataFlow, setShowDataFlow] = useState(false);
 
     const handleReactAdd = () => {
         if (!input) return alert('내용을 입력해주세요!');
@@ -51,7 +52,46 @@ const Practice = ({ type }) => {
                                 style={{ flex: 1 }}
                             />
                             <button onClick={handleReactAdd}>항목 추가</button>
+                            <button 
+                                onClick={() => setShowDataFlow(!showDataFlow)}
+                                style={{ background: showDataFlow ? 'var(--primary)' : 'transparent', border: '1px solid var(--primary)', color: showDataFlow ? '#fff' : 'var(--primary)' }}
+                            >
+                                {showDataFlow ? '설명 숨기기' : '상태 변화 흐름 보기'}
+                            </button>
                         </div>
+
+                        {showDataFlow && (
+                            <div style={{ marginTop: '1rem', padding: '1.5rem', background: 'rgba(0,0,0,0.4)', borderRadius: '8px', border: '1px dashed var(--primary)' }}>
+                                <h4 style={{ margin: '0 0 1rem 0', color: 'var(--primary)' }}>✨ React 상태(State)는 어떻게 변할까요?</h4>
+                                
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+                                    {/* 1. 사용자의 입력 */}
+                                    <div style={{ flex: 1, minWidth: '150px', background: 'rgba(236, 72, 153, 0.1)', padding: '1rem', borderRadius: '8px', textAlign: 'center' }}>
+                                        <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⌨️</div>
+                                        <strong>1. 사용자 입력</strong>
+                                        <p style={{ fontSize: '0.85rem', margin: '0.5rem 0 0 0', color: 'var(--text-muted)' }}>
+                                            사용자가 방금 <code>"{input || "입력값"}"</code> 을(를) 입력하고 추가 버튼을 누릅니다.
+                                        </p>
+                                    </div>
+
+                                    {/* 화살표 (요청) */}
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                                        <strong>상태(State) 업데이트</strong>
+                                        <span style={{ fontSize: '1.5rem' }}>➡️</span>
+                                        <span>setItems([...items, input])</span>
+                                    </div>
+
+                                    {/* 2. 화면 재렌더링 */}
+                                    <div style={{ flex: 1, minWidth: '150px', background: 'rgba(56, 189, 248, 0.1)', padding: '1rem', borderRadius: '8px', textAlign: 'center' }}>
+                                        <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🔄</div>
+                                        <strong>2. React (프론트엔드)</strong>
+                                        <p style={{ fontSize: '0.85rem', margin: '0.5rem 0 0 0', color: 'var(--text-muted)' }}>
+                                            배열에 새 값이 추가된 것을 감지하고, 화면의 리스트 부분만 즉시 다시 그립니다.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         <ul style={{ background: 'rgba(0,0,0,0.2)', padding: '1rem 2rem', borderRadius: '8px', marginTop: '1rem' }}>
                             {items.map((item, idx) => <li key={idx} style={{ color: 'var(--text-main)', marginBottom: '5px' }}>{item}</li>)}
                         </ul>
@@ -70,7 +110,52 @@ const Practice = ({ type }) => {
                             <button onClick={handleFlaskPost} disabled={loading}>
                                 {loading ? '서버 통신 중...' : '서버로 전송'}
                             </button>
+                            <button 
+                                onClick={() => setShowDataFlow(!showDataFlow)}
+                                style={{ background: showDataFlow ? 'var(--primary)' : 'transparent', border: '1px solid var(--primary)', color: showDataFlow ? '#fff' : 'var(--primary)' }}
+                            >
+                                {showDataFlow ? '설명 숨기기' : '데이터 흐름 설명 보기'}
+                            </button>
                         </div>
+
+                        {showDataFlow && (
+                            <div style={{ marginTop: '1rem', padding: '1.5rem', background: 'rgba(0,0,0,0.4)', borderRadius: '8px', border: '1px dashed var(--primary)' }}>
+                                <h4 style={{ margin: '0 0 1rem 0', color: 'var(--primary)' }}>🚀 데이터는 어떻게 전송될까요?</h4>
+                                
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+                                    {/* 1. 프론트엔드 (React) */}
+                                    <div style={{ flex: 1, minWidth: '150px', background: 'rgba(99, 102, 241, 0.1)', padding: '1rem', borderRadius: '8px', textAlign: 'center' }}>
+                                        <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>💻</div>
+                                        <strong>1. React (프론트엔드)</strong>
+                                        <p style={{ fontSize: '0.85rem', margin: '0.5rem 0 0 0', color: 'var(--text-muted)' }}>
+                                            사용자가 입력한 <code>{input || "이름"}</code> 을(를) JSON 형태의 포장지로 감쌉니다.
+                                        </p>
+                                        <pre style={{ margin: '0.5rem 0 0 0', fontSize: '0.75rem', background: '#000', padding: '0.5rem', borderRadius: '4px', textAlign: 'left' }}>
+{`{
+  "name": "${input || "이름"}",
+  "action": "고급 API 실습"
+}`}
+                                        </pre>
+                                    </div>
+
+                                    {/* 화살표 (요청) */}
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                                        <strong>POST 요청 전송</strong>
+                                        <span style={{ fontSize: '1.5rem' }}>➡️</span>
+                                        <span>fetch('/api/practice/summary')</span>
+                                    </div>
+
+                                    {/* 2. 백엔드 (Flask) */}
+                                    <div style={{ flex: 1, minWidth: '150px', background: 'rgba(16, 185, 129, 0.1)', padding: '1rem', borderRadius: '8px', textAlign: 'center' }}>
+                                        <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⚙️</div>
+                                        <strong>2. Flask (백엔드 서버)</strong>
+                                        <p style={{ fontSize: '0.85rem', margin: '0.5rem 0 0 0', color: 'var(--text-muted)' }}>
+                                            전달받은 JSON 포장지를 뜯고, 데이터를 읽은 뒤 안전하게 가공합니다.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </>
                 )}
 
